@@ -152,6 +152,25 @@ def label(rec):
     rot = lb.get("rot", 0)                      # texture stored rotated: draw upright then rotate
     dw, dh = (h, w) if rot in (90, 270) else (w, h)
     lb2 = dict(lb, bg=lb.get("bg", [0, 0, 0, 0]), ink=lb.get("ink", [255, 255, 255, 255]))
+    if lb.get("over"):
+        # words drawn over the regenerated (grid) image instead of a flat background
+        from cleanroom.decomp import gen
+        d = {"w": w, "h": h, "grid": rec["grid"]}
+        if "alpha2" in rec:
+            d["alpha2"] = rec["alpha2"]
+        base = gen.from_digest("t%d/%d" % (rec["t"], rec["i"]), d).astype(np.float32)
+        m = glyphs.label_texture(dict(lb2, bg=[0, 0, 0, 0], ink=[255, 255, 255, 255]), dw, dh)[..., 3] / 255.0
+        if rot:
+            m = np.rot90(m, k=rot // 90)
+        if "v" in lb.get("flip", ""):
+            m = m[::-1]
+        if "h" in lb.get("flip", ""):
+            m = m[:, ::-1]
+        o = glyphs._outline(np.ascontiguousarray(m), 1)
+        base[..., :3] *= (1 - 0.7 * np.clip(o, 0, 1))[..., None]
+        ink = np.asarray(lb2["ink"][:3], np.float32)
+        base[..., :3] = base[..., :3] * (1 - m[..., None]) + ink * m[..., None]
+        return np.clip(base, 0, 255).astype(np.uint8)
     img = glyphs.label_texture(lb2, dw, dh)
     if lb.get("frame"):
         m = np.zeros((dh, dw), np.float32)

@@ -327,8 +327,10 @@ def main(argv):
             out[off:off + len(data)] = data
     else:
         print("WARNING: --no-audio build keeps retail samples: DEV ONLY, never publish")
-    # the header checksum covers 0x1000-0x101000 (boot + code), which is untouched
-    assert out[0x1000:0x101000] == rom[0x1000:0x101000]
+    # DK Arcade / Jetpac sprites live in overlay data (inside the checksummed first MB)
+    from . import minigames
+    minigames.apply(out, json.load(open(os.path.join(spec_dir, "minigames.json"))))
+    struct.pack_into(">II", out, 0x10, *minigames.n64_crc(out))
     assert hashlib.sha1(out).hexdigest() != RETAIL_SHA1
     open(outp, "wb").write(out)
     print("wrote", outp, "sha1", hashlib.sha1(out).hexdigest()[:12])

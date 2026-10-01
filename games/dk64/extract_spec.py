@@ -202,6 +202,11 @@ def main(argv):
     print("fonts:", [(f["style"], f["first"], f["count"], f["page_w"], f["page_h"], len(f["glyphs"])) for f in font_styles])
     with gzip.open(os.path.join(argv[2], "textures.json.gz"), "wt") as f:
         json.dump(tex, f, separators=(",", ":"))
+    if "--pristine" in argv:
+        from . import minigames
+        mg = minigames.facts(rom, argv[argv.index("--pristine") + 1])
+        json.dump(mg, open(os.path.join(argv[2], "minigames.json"), "w"), separators=(",", ":"))
+        print("minigames:", len(mg["arcade"]), "arcade,", len(mg["jetpac"]), "jetpac sprites")
     if "--no-audio" not in argv and "--tex-only" not in argv:
         smp = samples(rom)
         with gzip.open(os.path.join(argv[2], "samples.json.gz"), "wt") as f:

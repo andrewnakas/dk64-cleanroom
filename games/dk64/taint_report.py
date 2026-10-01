@@ -25,6 +25,13 @@ def streams(rom):
     for t in TEX_TABLES:
         for i, d, g in T.files(t):
             yield "tex %d/%d" % (t, i), d
+    import json, os
+    from . import minigames
+    mg = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), "spec", "minigames.json")))
+    for ov, k in ((minigames.ARCADE, "arcade"), (minigames.JETPAC, "jetpac")):
+        data = minigames.blobs(rom, ov)[1]
+        for r in mg[k]:
+            yield "mini %s/%x" % (k, r["off"]), data[r["off"]:r["off"] + r["len"]]
     for name, ctl0, tbl0, tbl1 in BANKS:
         ctl = lzss.decode(rom[ctl0:tbl0])[0]
         bf = albank.parse_bankfile(ctl)
