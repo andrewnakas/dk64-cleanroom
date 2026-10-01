@@ -41,6 +41,8 @@
   taint scan (two-valued runs count as trivial) cannot flag it. Redraw from scratch if that is not acceptable.
   The first publish (~10:15) still had the retail minigame sprites; replaced at ~10:25.
 
+- 12:45: the published build (with 74 placeholder voices) checked in headless Edge: rap lyrics, DK TV, drawn eyes, audio flowing.
+
 ## Known gaps / next
 - Title logo "DONKEY KONG 64" and other text inside world textures are still grid blobs: re-typeset list in
   `text_labels.json` (only the Nintendo label so far).
