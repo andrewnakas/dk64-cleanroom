@@ -20,8 +20,28 @@
   code_124780 (`scan_sprites`, 1327), smoothness guess (`texguess`, 1151, ~90 % exact on known ones), 901 palettes.
 - CI textures: image regenerated from the grid, then quantised to a new palette shared by all textures of that palette.
 
-## Works
-- Retail baseline in native mupen64plus (dev only): boots to the DK Rap.
+## Works (2026-10-01 ~10:15)
+- **Published**: https://github.com/andrewnakas/dk64-cleanroom (source) + https://andrewnakas.github.io/dk64-cleanroom/
+  (gh-pages = EmulatorJS 4.2.3 + mupen64plus-next + `dk64.z64`). `sh tools/publish.sh push "msg"` rebuilds the site,
+  refuses unless taint prints 0 failing.
+- Clean ROM boots and plays (native mupen64plus with scripted pad and headless Edge): logos, DK Rap with readable
+  lyrics, DK TV attract mode, main menu ("ADVENTURE"), file select, new game, opening cutscenes.
+- Audio: both banks regenerated (1174 waves, own codebooks, loop states); web audio log shows steady buffers,
+  RMS 3-5k. ctl files re-compressed with our LZSS encoder and fit their ROM slots.
+- Fonts: all 8 styles (43 pages) drawn from the code's cell tables with the stroke font (`drawn.py`).
+- Taint: 9523 streams, **0 failing**. Four textures needed a different noise seed (`salts.json`).
 
-## Next
-- see bottom of file (updated each loop)
+## Known gaps / next
+- Title logo "DONKEY KONG 64" and other text inside world textures are still grid blobs: re-typeset list in
+  `text_labels.json` (only the Nintendo label so far).
+- Pictures: kong portrait halves (table 7: 577-591, 866-901; table 25: 627-636), Cranky/K. Rool portraits, Dolby
+  and Nintendo full-screen logos, numbered tiles (table 7: 510-541, 913-922), "HI/GO", "ON" signs.
+- HUD icons are outline + grid colour (readable shapes); melons, arrows, DK letters could be drawn properly.
+- 1108 textures have a guessed format (tables 7/14 mostly). Wrong guesses show as stripes: fix by listing them.
+- Voices: not started (placeholders + practice pack).
+- Not checked yet: gameplay beyond the opening cutscene, Jetpac/arcade overlays (their graphics live in overlay
+  data, i.e. kept code data: decide whether to regenerate).
+
+## For the morning
+- Open the Pages link, press Enter (Start) to skip the rap, pick ADVENTURE. Report what looks wrong first.
+- Voices to record: list will be in `games/dk64/voice_lines.json` once the practice pack is built.
