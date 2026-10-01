@@ -48,10 +48,17 @@
   and Nintendo full-screen logos, numbered tiles (table 7: 510-541, 913-922), "HI/GO", "ON" signs.
 - HUD icons are outline + grid colour (readable shapes); melons, arrows, DK letters could be drawn properly.
 - 1108 textures have a guessed format (tables 7/14 mostly). Wrong guesses show as stripes: fix by listing them.
-- Voices: not started (placeholders + practice pack).
+- Voices (12:15): 139 spoken lines found with Whisper (`voice_lines.json`: 76 DK Rap phrases in bank A, 8 K. Rool,
+  16 announcer, 39 kong shouts; words hand-corrected, some are guesses). Practice pack built (local only):
+  `D:/n64work/dk64/practice`. Placeholder Piper voices: **74 of 139 done** (`games/dk64/voices/`), then the TTS job was
+  stopped by Claude Code for low system memory. Not restarted (machine short on RAM). To finish:
+  `CLEANROOM_GAME=games/dk64 python -m cleanroom.voice.voices build`, then generate + `tools/publish.sh push`.
+  The other 65 lines currently play as resynthesised noise-shaped sound.
 - Not checked yet: gameplay beyond the opening cutscene, Jetpac/arcade overlays (their graphics live in overlay
   data, i.e. kept code data: decide whether to regenerate).
 
 ## For the morning
 - Open the Pages link, press Enter (Start) to skip the rap, pick ADVENTURE. Report what looks wrong first.
-- Voices to record: list will be in `games/dk64/voice_lines.json` once the practice pack is built.
+- Voices to record: `D:/n64work/dk64/practice/SCRIPT.txt` + one call-and-response track per character
+  (rapper, krool, announcer, kong). Check the words in SCRIPT.txt first: some are Whisper guesses.
+- Decide: Jetpac silhouettes acceptable? Kong portrait pictures still need drawing.
