@@ -94,6 +94,10 @@ def fonts(rom, T):
     return interp, styles
 
 
+# formats the guesser gets wrong, fixed by looking once: (table, index) -> (fmt, siz, w, h)
+OVERRIDE = {(14, 44): (0, 2, 224, 128)}       # title logo
+
+
 def textures(rom, T):
     uses, pals = texscan.scan(T)
     font_interp, font_styles = fonts(rom, T)
@@ -122,6 +126,9 @@ def textures(rom, T):
                     interp = None
                 else:
                     rec["pals"] = ps
+        if (t, i) in OVERRIDE:
+            interp = OVERRIDE[(t, i)]
+            rec["src"] = "listed"
         if t == 14 and i in font_interp:
             interp = font_interp[i]
             rec["src"] = "font"
