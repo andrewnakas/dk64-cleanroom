@@ -7,3 +7,4 @@ __pycache__/
 baserom*
 spec_dirty/
 *.pkl
+start.cmd

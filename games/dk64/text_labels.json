@@ -1,0 +1,27 @@
+{
+ "_doc": "Text-bearing textures, re-typeset. Key table/index. lines = the words (as shown in game), ink/bg RGBA, rot = stored rotation, flip = v/h, frame = border colour.",
+ "14/94": {
+  "lines": [
+   "Nintendo"
+  ],
+  "ink": [
+   230,
+   30,
+   30,
+   255
+  ],
+  "bg": [
+   0,
+   0,
+   0,
+   0
+  ],
+  "frame": [
+   230,
+   30,
+   30,
+   255
+  ],
+  "frame_w": 3
+ }
+}

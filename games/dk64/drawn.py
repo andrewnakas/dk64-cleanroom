@@ -136,7 +136,46 @@ def font_page(rec):
     return np.clip(img, 0, 255).astype(np.uint8)
 
 
+LABELS = None
+
+
+def label(rec):
+    """Text-bearing textures re-typeset from text_labels.json: {"table/index": {lines, ink, bg, flip}}."""
+    global LABELS
+    if LABELS is None:
+        p = os.path.join(HERE, "text_labels.json")
+        LABELS = json.load(open(p)) if os.path.exists(p) else {}
+    lb = LABELS.get("%d/%d" % (rec["t"], rec["i"]))
+    if lb is None:
+        return None
+    w, h = rec["w"], rec["h"]
+    rot = lb.get("rot", 0)                      # texture stored rotated: draw upright then rotate
+    dw, dh = (h, w) if rot in (90, 270) else (w, h)
+    lb2 = dict(lb, bg=lb.get("bg", [0, 0, 0, 0]), ink=lb.get("ink", [255, 255, 255, 255]))
+    img = glyphs.label_texture(lb2, dw, dh)
+    if lb.get("frame"):
+        m = np.zeros((dh, dw), np.float32)
+        t = max(1, int(lb.get("frame_w", 2)))
+        m[:t] = m[-t:] = 1; m[:, :t] = 1; m[:, -t:] = 1
+        glyphs._layer(img, m, lb["frame"])
+    if rot:
+        img = np.rot90(img, k=rot // 90)
+    if "v" in lb.get("flip", ""):
+        img = img[::-1]
+    if "h" in lb.get("flip", ""):
+        img = img[:, ::-1]
+    img = np.clip(img, 0, 255)
+    if rec["fmt"] == 0 and rec["siz"] == 2:
+        img[..., 3] = (img[..., 3] >= 110) * 255.0
+    if rec["fmt"] == 4:
+        a = img[..., 3]
+        img = np.stack([a, a, a, a], -1)
+    return np.ascontiguousarray(img).astype(np.uint8)
+
+
 def hook(rec, pal=None):
     if rec["t"] == 14 and rec.get("src") == "font":
         return font_page(rec)
+    if rec["fmt"] != 2:
+        return label(rec)
     return None

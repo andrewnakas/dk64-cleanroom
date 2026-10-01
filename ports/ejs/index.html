@@ -54,6 +54,21 @@
     window.EJS_defaultOptions["mupen64plus-" + kv.slice(0, i)] = kv.slice(i + 1);
   }
 
+  // dev: ?audiolog=1 logs the level of the audio the emulator queues (buffers started, RMS, peak)
+  if (q.get("audiolog")) {
+    let n = 0, sum = 0, cnt = 0, peak = 0;
+    const st = AudioBufferSourceNode.prototype.start;
+    AudioBufferSourceNode.prototype.start = function () {
+      try {
+        const d = this.buffer.getChannelData(0);
+        for (let i = 0; i < d.length; i += 4) { const v = d[i] * 32768; sum += v * v; cnt++; if (Math.abs(v) > peak) peak = Math.abs(v); }
+        n++;
+      } catch (e) {}
+      return st.apply(this, arguments);
+    };
+    setInterval(() => { console.log(`DKAUDIO buffers=${n} rms=${cnt ? Math.sqrt(sum / cnt).toFixed(0) : 0} peak=${peak.toFixed(0)}`); n = 0; sum = 0; cnt = 0; peak = 0; }, 5000);
+  }
+
   // ---- dev hooks: ?dump=5,10 (screenshots to console), ?keys=t:id:dur[:val],... ----
   const log = (m) => console.log(m);
   window.EJS_onGameStart = function () {
