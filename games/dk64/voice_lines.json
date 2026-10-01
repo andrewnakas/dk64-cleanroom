@@ -1,0 +1,589 @@
+{
+ "_doc": "Spoken lines found in the two sample banks (words as heard once in the dirty room, corrected by hand). who: rapper (DK Rap phrases), krool, announcer, kong (shouts). Placeholders are Piper TTS; real takes come from the practice pack.",
+ "_characters": {
+  "rapper": {
+   "tts": {
+    "model": "en_US-ryan-high",
+    "semitones": -1.0,
+    "length": 0.9
+   }
+  },
+  "krool": {
+   "tts": {
+    "model": "en_US-joe-medium",
+    "semitones": -4.0,
+    "length": 1.05
+   }
+  },
+  "announcer": {
+   "tts": {
+    "model": "en_US-ryan-high",
+    "semitones": 0.0,
+    "length": 0.95
+   }
+  },
+  "kong": {
+   "tts": {
+    "model": "en_US-joe-medium",
+    "semitones": 3.0,
+    "length": 0.9
+   }
+  }
+ },
+ "samples/A/A_81a8_.wav": {
+  "who": "rapper",
+  "text": "YEAH!"
+ },
+ "samples/A/A_9bc0_.wav": {
+  "who": "rapper",
+  "text": "Ooh, banana!"
+ },
+ "samples/A/A_9d60_.wav": {
+  "who": "rapper",
+  "text": "So they're finally here,"
+ },
+ "samples/A/A_9e18_.wav": {
+  "who": "rapper",
+  "text": "performing for you!"
+ },
+ "samples/A/A_9ed0_.wav": {
+  "who": "rapper",
+  "text": "if you know the words you can join in too."
+ },
+ "samples/A/A_9f88_.wav": {
+  "who": "rapper",
+  "text": "Put your hands together."
+ },
+ "samples/A/A_a040_.wav": {
+  "who": "rapper",
+  "text": "If you wanna clap"
+ },
+ "samples/A/A_a0f8_.wav": {
+  "who": "rapper",
+  "text": "as we take you through."
+ },
+ "samples/A/A_a1b0_.wav": {
+  "who": "rapper",
+  "text": "through this monkey rap!"
+ },
+ "samples/A/A_a320_.wav": {
+  "who": "rapper",
+  "text": "He's the leader of the bunch."
+ },
+ "samples/A/A_a3d8_.wav": {
+  "who": "rapper",
+  "text": "You know him well."
+ },
+ "samples/A/A_a490_.wav": {
+  "who": "rapper",
+  "text": "He's finally back."
+ },
+ "samples/A/A_a548_.wav": {
+  "who": "rapper",
+  "text": "to kick some tail."
+ },
+ "samples/A/A_a600_.wav": {
+  "who": "rapper",
+  "text": "His coconut gun"
+ },
+ "samples/A/A_a6b8_.wav": {
+  "who": "rapper",
+  "text": "can fire in spurts."
+ },
+ "samples/A/A_a770_.wav": {
+  "who": "rapper",
+  "text": "If he shoots ya!"
+ },
+ "samples/A/A_a828_.wav": {
+  "who": "rapper",
+  "text": "It's gonna hurt!"
+ },
+ "samples/A/A_aa50_.wav": {
+  "who": "rapper",
+  "text": "And stronger too."
+ },
+ "samples/A/A_ab08_.wav": {
+  "who": "rapper",
+  "text": "He's the first member!"
+ },
+ "samples/A/A_abc0_.wav": {
+  "who": "rapper",
+  "text": "of the DK crew."
+ },
+ "samples/A/A_ac78_.wav": {
+  "who": "rapper",
+  "text": "This Kong's got style,"
+ },
+ "samples/A/A_ad30_.wav": {
+  "who": "rapper",
+  "text": "so listen up dudes, she can shrink in size"
+ },
+ "samples/A/A_aea0_.wav": {
+  "who": "rapper",
+  "text": "She's quick and nimble"
+ },
+ "samples/A/A_af58_.wav": {
+  "who": "rapper",
+  "text": "when she needs to be."
+ },
+ "samples/A/A_b010_.wav": {
+  "who": "rapper",
+  "text": "She can float through the air!"
+ },
+ "samples/A/A_b0c8_.wav": {
+  "who": "rapper",
+  "text": "and climb up trees."
+ },
+ "samples/A/A_b180_.wav": {
+  "who": "rapper",
+  "text": "If you choose her..."
+ },
+ "samples/A/A_b238_.wav": {
+  "who": "rapper",
+  "text": "you'll not choose wrong"
+ },
+ "samples/A/A_b2f0_.wav": {
+  "who": "rapper",
+  "text": "With a skip and a hop,"
+ },
+ "samples/A/A_b3a8_.wav": {
+  "who": "rapper",
+  "text": "she's one cool Kong!"
+ },
+ "samples/A/A_b460_.wav": {
+  "who": "rapper",
+  "text": "He has no style."
+ },
+ "samples/A/A_b518_.wav": {
+  "who": "rapper",
+  "text": "He has no grace!"
+ },
+ "samples/A/A_b5d0_.wav": {
+  "who": "rapper",
+  "text": "This Kong has a funny face."
+ },
+ "samples/A/A_b688_.wav": {
+  "who": "rapper",
+  "text": "He can handstand."
+ },
+ "samples/A/A_b740_.wav": {
+  "who": "rapper",
+  "text": "when he needs to."
+ },
+ "samples/A/A_b7f8_.wav": {
+  "who": "rapper",
+  "text": "and stretch his arms out."
+ },
+ "samples/A/A_b8b0_.wav": {
+  "who": "rapper",
+  "text": "He's inflatable"
+ },
+ "samples/A/A_b968_.wav": {
+  "who": "rapper",
+  "text": "and fight himself."
+ },
+ "samples/A/A_ba20_.wav": {
+  "who": "rapper",
+  "text": "Just like a balloon."
+ },
+ "samples/A/A_bad8_.wav": {
+  "who": "rapper",
+  "text": "this crazy Kong"
+ },
+ "samples/A/A_bb90_.wav": {
+  "who": "rapper",
+  "text": "just digs this tune!"
+ },
+ "samples/A/A_bc48_.wav": {
+  "who": "rapper",
+  "text": "He's back again!"
+ },
+ "samples/A/A_bd00_.wav": {
+  "who": "rapper",
+  "text": "and about time too,"
+ },
+ "samples/A/A_bdb8_.wav": {
+  "who": "rapper",
+  "text": "And this time..."
+ },
+ "samples/A/A_be70_.wav": {
+  "who": "rapper",
+  "text": "He's in the mood."
+ },
+ "samples/A/A_bf28_.wav": {
+  "who": "rapper",
+  "text": "He can fly real high!"
+ },
+ "samples/A/A_bfe0_.wav": {
+  "who": "rapper",
+  "text": "with his jetpack on!"
+ },
+ "samples/A/A_c098_.wav": {
+  "who": "rapper",
+  "text": "whip his pistols out."
+ },
+ "samples/A/A_c150_.wav": {
+  "who": "rapper",
+  "text": "He's one tough Kong."
+ },
+ "samples/A/A_c208_.wav": {
+  "who": "rapper",
+  "text": "He'll make you smile!"
+ },
+ "samples/A/A_c2c0_.wav": {
+  "who": "rapper",
+  "text": "when he plays his tune."
+ },
+ "samples/A/A_c378_.wav": {
+  "who": "rapper",
+  "text": "But Kremlings beware"
+ },
+ "samples/A/A_c430_.wav": {
+  "who": "rapper",
+  "text": "Because he's after you!"
+ },
+ "samples/A/A_c4e8_.wav": {
+  "who": "rapper",
+  "text": "Finally!"
+ },
+ "samples/A/A_c5a0_.wav": {
+  "who": "rapper",
+  "text": "He's here for you!"
+ },
+ "samples/A/A_c658_.wav": {
+  "who": "rapper",
+  "text": "It's the last member."
+ },
+ "samples/A/A_c710_.wav": {
+  "who": "rapper",
+  "text": "of the DK crew."
+ },
+ "samples/A/A_c7c8_.wav": {
+  "who": "rapper",
+  "text": "This Kong's so strong,"
+ },
+ "samples/A/A_c880_.wav": {
+  "who": "rapper",
+  "text": "It isn't funny."
+ },
+ "samples/A/A_c938_.wav": {
+  "who": "rapper",
+  "text": "can make a Kremling"
+ },
+ "samples/A/A_c9f0_.wav": {
+  "who": "rapper",
+  "text": "Cry out for Mommy!"
+ },
+ "samples/A/A_caa8_.wav": {
+  "who": "rapper",
+  "text": "Can pick up a boulder"
+ },
+ "samples/A/A_cb60_.wav": {
+  "who": "rapper",
+  "text": "with relative ease."
+ },
+ "samples/A/A_cc18_.wav": {
+  "who": "rapper",
+  "text": "Makes crushing rocks!"
+ },
+ "samples/A/A_ccd0_.wav": {
+  "who": "rapper",
+  "text": "Seem such a breeze!"
+ },
+ "samples/A/A_cd88_.wav": {
+  "who": "rapper",
+  "text": "He may move slow,"
+ },
+ "samples/A/A_ce40_.wav": {
+  "who": "rapper",
+  "text": "he can't jump high,"
+ },
+ "samples/A/A_cef8_.wav": {
+  "who": "rapper",
+  "text": "but this Kong's"
+ },
+ "samples/A/A_cfb0_.wav": {
+  "who": "rapper",
+  "text": "One hell of a guy!"
+ },
+ "samples/A/A_d348_.wav": {
+  "who": "rapper",
+  "text": "Donkey Kong is here!"
+ },
+ "samples/A/A_d4b8_.wav": {
+  "who": "rapper",
+  "text": "Come on, Cranky!"
+ },
+ "samples/A/A_d570_.wav": {
+  "who": "rapper",
+  "text": "Take it to the fridge!"
+ },
+ "samples/A/A_d628_.wav": {
+  "who": "rapper",
+  "text": "Walnuts,"
+ },
+ "samples/A/A_d798_.wav": {
+  "who": "rapper",
+  "text": "pineapple smells,"
+ },
+ "samples/A/A_d850_.wav": {
+  "who": "rapper",
+  "text": "grapes, melons, oranges, and coconut shells."
+ },
+ "samples/A/A_e990_.wav": {
+  "who": "rapper",
+  "text": "Wow!"
+ },
+ "samples/B/B_11e20_.wav": {
+  "who": "announcer",
+  "text": "Hurry!"
+ },
+ "samples/B/B_11ed8_.wav": {
+  "who": "announcer",
+  "text": "Well done!"
+ },
+ "samples/B/B_15978_.wav": {
+  "who": "kong",
+  "text": "Get out."
+ },
+ "samples/B/B_15ae8_.wav": {
+  "who": "kong",
+  "text": "Come here."
+ },
+ "samples/B/B_183f0_.wav": {
+  "who": "kong",
+  "text": "Bye!"
+ },
+ "samples/B/B_184a8_.wav": {
+  "who": "kong",
+  "text": "Yeah!"
+ },
+ "samples/B/B_18618_.wav": {
+  "who": "kong",
+  "text": "Oh!"
+ },
+ "samples/B/B_1a2b0_.wav": {
+  "who": "kong",
+  "text": "WOOHOO!"
+ },
+ "samples/B/B_1b688_.wav": {
+  "who": "kong",
+  "text": "Yeah!"
+ },
+ "samples/B/B_1d770_.wav": {
+  "who": "kong",
+  "text": "Yeah!"
+ },
+ "samples/B/B_1e518_.wav": {
+  "who": "kong",
+  "text": "HUH"
+ },
+ "samples/B/B_22488_.wav": {
+  "who": "kong",
+  "text": "Ahem, ahem, ahem."
+ },
+ "samples/B/B_22d78_.wav": {
+  "who": "kong",
+  "text": "Now, now!"
+ },
+ "samples/B/B_23de0_.wav": {
+  "who": "kong",
+  "text": "Mmm-hmm-hmm-hmm-hmm."
+ },
+ "samples/B/B_23f70_.wav": {
+  "who": "kong",
+  "text": "Whoa!"
+ },
+ "samples/B/B_243c0_.wav": {
+  "who": "kong",
+  "text": "Hey!"
+ },
+ "samples/B/B_24a80_.wav": {
+  "who": "krool",
+  "text": "I've been waiting a long time for this moment. Soon Donkey Kong and his pretty little island will be no more."
+ },
+ "samples/B/B_24b38_.wav": {
+  "who": "kong",
+  "text": "Guards!"
+ },
+ "samples/B/B_24bf0_.wav": {
+  "who": "krool",
+  "text": "I want you to do everything in your power to keep Donkey Kong distracted."
+ },
+ "samples/B/B_24ca8_.wav": {
+  "who": "krool",
+  "text": "steal that horde of golden bananas he treasures so much and take care of his pathetic friends."
+ },
+ "samples/B/B_24d60_.wav": {
+  "who": "krool",
+  "text": "This time there can be no mistakes."
+ },
+ "samples/B/B_24e18_.wav": {
+  "who": "krool",
+  "text": "I hope for your sake. You're right this time."
+ },
+ "samples/B/B_24ed0_.wav": {
+  "who": "krool",
+  "text": "While you'll be busy looking for your precious golden bananas and flea-bitten friends, I'll be preparing my lizard-flavored surprise."
+ },
+ "samples/B/B_250b0_.wav": {
+  "who": "kong",
+  "text": "No, no, no!"
+ },
+ "samples/B/B_25230_.wav": {
+  "who": "kong",
+  "text": "YEAH!"
+ },
+ "samples/B/B_25458_.wav": {
+  "who": "kong",
+  "text": "Ah!"
+ },
+ "samples/B/B_255c8_.wav": {
+  "who": "krool",
+  "text": "Oh, your action, let's say, wait for it to be taken care of business. Ha ha ha ha ha ha ha ha ha."
+ },
+ "samples/B/B_25680_.wav": {
+  "who": "kong",
+  "text": "No!"
+ },
+ "samples/B/B_27058_.wav": {
+  "who": "kong",
+  "text": "Please!"
+ },
+ "samples/B/B_274c8_.wav": {
+  "who": "kong",
+  "text": "No!"
+ },
+ "samples/B/B_277a8_.wav": {
+  "who": "kong",
+  "text": "No!"
+ },
+ "samples/B/B_27918_.wav": {
+  "who": "krool",
+  "text": "Woo hoo hoo! Woo hoo hoo hoo!"
+ },
+ "samples/B/B_27dd8_.wav": {
+  "who": "kong",
+  "text": "You"
+ },
+ "samples/B/B_280b8_.wav": {
+  "who": "kong",
+  "text": "Hee hee!"
+ },
+ "samples/B/B_28170_.wav": {
+  "who": "kong",
+  "text": "Go!"
+ },
+ "samples/B/B_289b8_.wav": {
+  "who": "kong",
+  "text": "Hey!"
+ },
+ "samples/B/B_28a70_.wav": {
+  "who": "kong",
+  "text": "Mum!"
+ },
+ "samples/B/B_28b28_.wav": {
+  "who": "kong",
+  "text": "Whee!"
+ },
+ "samples/B/B_29558_.wav": {
+  "who": "announcer",
+  "text": "Welcome to bonus stage!"
+ },
+ "samples/B/B_29620_.wav": {
+  "who": "announcer",
+  "text": "Reload!"
+ },
+ "samples/B/B_2a8d8_.wav": {
+  "who": "announcer",
+  "text": "Next."
+ },
+ "samples/B/B_2b560_.wav": {
+  "who": "announcer",
+  "text": "One!"
+ },
+ "samples/B/B_2b618_.wav": {
+  "who": "announcer",
+  "text": "Two!"
+ },
+ "samples/B/B_2b788_.wav": {
+  "who": "kong",
+  "text": "Bye!"
+ },
+ "samples/B/B_2b840_.wav": {
+  "who": "kong",
+  "text": "Bye!"
+ },
+ "samples/B/B_2b8f8_.wav": {
+  "who": "announcer",
+  "text": "Six!"
+ },
+ "samples/B/B_2b9b0_.wav": {
+  "who": "announcer",
+  "text": "Seven!"
+ },
+ "samples/B/B_2bb20_.wav": {
+  "who": "announcer",
+  "text": "Nine!"
+ },
+ "samples/B/B_2bbd8_.wav": {
+  "who": "announcer",
+  "text": "Ten!"
+ },
+ "samples/B/B_2bc90_.wav": {
+  "who": "announcer",
+  "text": "Eleven!"
+ },
+ "samples/B/B_2bd48_.wav": {
+  "who": "announcer",
+  "text": "Twelve!"
+ },
+ "samples/B/B_2bec8_.wav": {
+  "who": "kong",
+  "text": "Come on!"
+ },
+ "samples/B/B_2c2c0_.wav": {
+  "who": "kong",
+  "text": "Mmm, mmm, mmm, mmm, mmm!"
+ },
+ "samples/B/B_2c898_.wav": {
+  "who": "announcer",
+  "text": "In the red corner!"
+ },
+ "samples/B/B_2c950_.wav": {
+  "who": "kong",
+  "text": "Bye!"
+ },
+ "samples/B/B_2ca08_.wav": {
+  "who": "announcer",
+  "text": "In the blue corner!"
+ },
+ "samples/B/B_2cac0_.wav": {
+  "who": "announcer",
+  "text": "Knockout!"
+ },
+ "samples/B/B_8740_.wav": {
+  "who": "kong",
+  "text": "Woo!"
+ },
+ "samples/B/B_afa8_.wav": {
+  "who": "kong",
+  "text": "Bye!"
+ },
+ "samples/B/B_b598_.wav": {
+  "who": "kong",
+  "text": "Woo!"
+ },
+ "samples/B/B_c428_.wav": {
+  "who": "kong",
+  "text": "Whoa!"
+ },
+ "samples/B/B_ccc8_.wav": {
+  "who": "kong",
+  "text": "Woo hoo hoo!"
+ },
+ "samples/B/B_cf00_.wav": {
+  "who": "kong",
+  "text": "Woohoo!"
+ }
+}

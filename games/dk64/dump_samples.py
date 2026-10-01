@@ -35,7 +35,7 @@ def main(argv):
             for sd in ins["sounds"]:
                 waves[sd["wave"]["_id"]] = (sd["wave"], sd["keymap"]["key_base"])
         for wid, (w, key) in waves.items():
-            rel = "samples/%s/%s.wav" % (name, wid.split("@")[1])
+            rel = "samples/%s/%s_%s_.wav" % (name, name, wid.split("@")[1])   # voice kit strips 5 chars
             n = w["len"] // 9 * 16
             p = os.path.join(out, rel)
             if not os.path.exists(p):

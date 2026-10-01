@@ -222,6 +222,10 @@ def book_bytes(preds, npred):
     return b, struct.pack(">ii", b["order"], b["npred"]) + struct.pack(">%dh" % len(b["book"]), *b["book"])
 
 
+def voice_path(d):
+    return os.path.join(os.path.dirname(os.path.abspath(__file__)), "voices", "%s_%x.wav" % (d["bank"], d["wave"]))
+
+
 def gen_wave(d):
     k = "smp/%s/%x" % (d["bank"], d["wave"])
     desc = d["desc"]
@@ -229,7 +233,17 @@ def gen_wave(d):
         # sustained instrument: hold the measured pitch (frame estimates have octave errors)
         desc = {"frames": [dict(f, f0=d["f0"]) if f["f0"] > 20 else f for f in desc["frames"]]}
     n = d["nframes"]
-    x = descriptor.synthesize(desc, n, d["rate"], seed=gen.h32("smp", k))
+    vp = voice_path(d)
+    if os.path.exists(vp):
+        # a spoken line: placeholder TTS (or the user's processed take), see voice_lines.json
+        import wave
+        with wave.open(vp) as wv:
+            x = np.frombuffer(wv.readframes(wv.getnframes()), "<i2").astype(np.float32) / 32768
+        rms = 10 ** (np.mean([f["rms"] for f in d["desc"]["frames"]]) / 20.0) if d["desc"]["frames"] else 0.1
+        x = x / (np.sqrt((x ** 2).mean()) + 1e-9) * rms
+        x = x / max(1.0, np.abs(x).max() / 0.98)
+    else:
+        x = descriptor.synthesize(desc, n, d["rate"], seed=gen.h32("smp", k))
     x = np.pad(np.asarray(x, np.float32)[:n], (0, max(0, n - len(x))))
     if "loop" in d and d["loop"][1] > d["loop"][0] and d["loop"][1] <= n:
         x = descriptor.make_loop_seamless(x, d["loop"][0], d["loop"][1])
@@ -254,6 +268,12 @@ def gen_audio(rom, samples, cache=None, procs=4):
     if cache and os.path.exists(cache):
         import pickle
         res = pickle.load(open(cache, "rb"))
+    # spoken lines are re-encoded whenever their voice file is newer than the cache
+    ct = os.path.getmtime(cache) if cache and os.path.exists(cache) else 0
+    for d in jobs:
+        vp = voice_path(d)
+        if os.path.exists(vp) and os.path.getmtime(vp) > ct:
+            res.pop((d["bank"], d["wave"]), None)
     todo = [d for d in jobs if (d["bank"], d["wave"]) not in res]
     if todo:
         import multiprocessing as mp
