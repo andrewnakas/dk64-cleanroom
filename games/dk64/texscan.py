@@ -18,7 +18,7 @@ def scan_file(d, uses, pals, maxidx=8192):
     op = w[:, 0] >> 24
     cand = np.nonzero((op == 0xFD) & ((w[:, 0] & 0x0007FFFF) == 0) & (w[:, 1] < maxidx))[0]
     tile0 = None      # (fmt, siz, line)
-    cur_pal = None
+    ents = []         # in file order: ("tlut", idx) or ("tex", idx, fmt, siz, w, h)
     for ci, j in enumerate(cand):
         idx = int(w[j, 1])
         end = cand[ci + 1] if ci + 1 < len(cand) else n
@@ -47,7 +47,7 @@ def scan_file(d, uses, pals, maxidx=8192):
                 break
         if is_tlut:
             pals[idx][texels] += 1
-            cur_pal = idx
+            ents.append(("tlut", idx))
             continue
         if texels is None:
             continue
@@ -67,7 +67,15 @@ def scan_file(d, uses, pals, maxidx=8192):
                 continue
             wd = line * 64 // bpp
             size = (wd, max(1, texels // wd))
-        uses[idx][(fmt, siz, size[0], size[1], cur_pal if fmt == 2 else None)] += 1
+        ents.append(("tex", idx, fmt, siz, size[0], size[1]))
+    # a CI texture's palette is the TLUT load that follows it
+    for a, e in enumerate(ents):
+        if e[0] != "tex":
+            continue
+        pal = None
+        if e[2] == 2 and a + 1 < len(ents) and ents[a + 1][0] == "tlut":
+            pal = ents[a + 1][1]
+        uses[e[1]][(e[2], e[3], e[4], e[5], pal)] += 1
 
 
 def scan(T):
@@ -106,3 +114,38 @@ if __name__ == "__main__":
     print("unreferenced idx ranges", rest[:10], rest[-10:])
     multi = sum(1 for i, c in uses.items() if len(c) > 1)
     print("textures with >1 interpretation", multi)
+
+
+SPRITE_BLOB = (0x124780, 0x126260)   # global_asm code blob offsets (code_124780)
+
+
+def scan_sprites(T, code):
+    """SpriteData records in the code blob -> {(table, idx): (fmt, siz, w, h)}.
+
+    struct: s32 id; u8 nx, ny, fmt, siz; u8[5]; u8 table(1 = table 25, 0 = table 7);
+    s16 w, h, count; s16 images[nx*ny*count].
+    """
+    sz = {t: {i: len(d) for i, d, g in T.files(t)} for t in (7, 25)}
+    out = {}
+    recs = []
+    o = SPRITE_BLOB[0]
+    while o < SPRITE_BLOB[1] - 0x16:
+        id_, nx, ny, fmt, siz = struct.unpack_from(">iBBBB", code, o)
+        table, w, h, cnt = struct.unpack_from(">Bhhh", code, o + 0xD)
+        ok = False
+        if 1 <= w <= 512 and 1 <= h <= 512 and 1 <= cnt <= 400 and fmt in (0, 2, 3, 4) and siz < 4 \
+                and 1 <= nx <= 16 and 1 <= ny <= 16 and table < 2:
+            n = cnt * nx * ny
+            if o + 0x14 + 2 * n <= len(code):
+                imgs = struct.unpack_from(">%dh" % n, code, o + 0x14)
+                tb = 25 if table else 7
+                need = w * h * (4 << siz) // 8
+                if all(i in sz[tb] and sz[tb][i] >= need for i in imgs):
+                    for i in imgs:
+                        out[(tb, i)] = (fmt, siz, w, h)
+                    recs.append((o, id_, nx, ny, fmt, siz, tb, w, h, cnt, imgs))
+                    ok = True
+                    o += (0x14 + 2 * n + 3) & ~3
+        if not ok:
+            o += 4
+    return out, recs
