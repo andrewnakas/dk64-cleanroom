@@ -59,6 +59,14 @@
 - Not checked yet: gameplay beyond the opening cutscene, Jetpac/arcade overlays (their graphics live in overlay
   data, i.e. kept code data: decide whether to regenerate).
 
+## Loop stopped (13:15)
+The remaining items need either a decision or a large drawing job best steered by a look at the game:
+- Kong portrait pictures (table 7: 577-591, 866-901; table 25: 627-636, 3432-3476) are still grid blobs. They are
+  rotated half-face tiles; no brief-based painter exists for them yet. Not attempted.
+- 65 placeholder voices not synthesised (TTS job stopped for low memory, not restarted).
+- CI-format text textures (factory map, chalkboards) are not re-typeset: `drawn.label` skips CI.
+Restart with the same /loop prompt.
+
 ## For the morning
 - Open the Pages link, press Enter (Start) to skip the rap, pick ADVENTURE. Report what looks wrong first.
 - Voices to record: `D:/n64work/dk64/practice/SCRIPT.txt` + one call-and-response track per character
