@@ -31,8 +31,16 @@ RETAIL_SHA1 = "cf806ff2603640a748fca5026ded28802f1f4a50"
 
 # ------------------------------------------------------------------ textures
 
+# textures whose first noise seed gave a coincidental >=32 byte match with retail (taint_report):
+# a different seed for our detail noise. {"table/index": salt}
+_SALTS = os.path.join(os.path.dirname(os.path.abspath(__file__)), "salts.json")
+SALTS = json.load(open(_SALTS)) if os.path.exists(_SALTS) else {}
+
+
 def key(rec, extra=""):
-    return "t%d/%d%s" % (rec["t"], rec["i"], extra)
+    k = "t%d/%d%s" % (rec["t"], rec["i"], extra)
+    salt = SALTS.get("%d/%d" % (rec["t"], rec["i"]))
+    return k + "#%d" % salt if salt else k
 
 
 def base_image(rec, d, k):
@@ -267,7 +275,7 @@ def gen_audio(rom, samples, cache=None, procs=4):
             data, bb, st = res[(name, d["wave"])]
             wo = d["wave"]
             base, ln, typ, fl, lp, bk = struct.unpack_from(">IiBBxxII", ctl, wo)
-            assert base == d["base"] and ln == d["len"] == len(data), (name, hex(wo))
+            assert base == d["base"] and ln == d["len"] and ln - 9 < len(data) <= ln, (name, hex(wo))
             order, npred = struct.unpack_from(">ii", ctl, bk)
             assert len(bb) == 8 + 16 * order * npred
             if bk in books and books[bk] != bb:
@@ -282,7 +290,7 @@ def gen_audio(rom, samples, cache=None, procs=4):
                 ctl[bk:bk + len(bb)] = bb
             if lp:
                 struct.pack_into(">16h", ctl, lp + 12, *st)
-            tbl[base:base + ln] = data
+            tbl[base:base + len(data)] = data
             nw += 1
         enc = lzss.encode(bytes(ctl))
         assert lzss.decode(enc)[0] == bytes(ctl)

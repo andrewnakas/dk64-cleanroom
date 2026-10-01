@@ -40,8 +40,63 @@ def fact(rgba):
     return d
 
 
+DATA_GZ = 0xC29D4
+VRAM = 0x805FB300
+# font styles (func_global_asm_806FBEF0): fmt, siz, page width; height from the style table
+FONT_FMT = {0: (3, 0, 512), 1: (0, 2, 76), 2: (4, 0, 512), 3: (0, 2, 32), 4: (4, 0, 1024), 5: (4, 0, 1024),
+            6: (3, 1, 176), 7: (0, 3, 32)}     # 7: glow digits are stored 32-bit
+FONT_SET2 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ.-?{}:=0123456789<>m)!@#$%^&cab"   # code_100180.c
+FONT_NUM = "0123456789%/"
+
+
+def fonts(rom, T):
+    """Font styles from the code data (kept: code): files, cell tables, charsets.
+    -> ({hud file: (fmt, siz, w, h)}, json-able style list)"""
+    import struct
+    code = zlib.decompressobj(31).decompress(rom[CODE_GZ:CODE_GZ + 0x200000])
+    data = zlib.decompressobj(31).decompress(rom[DATA_GZ:DATA_GZ + 0x200000])
+    base = VRAM + len(code)
+    ptrs = list(struct.unpack_from(">7I", data, 0x80754A18 - base))
+    ends = sorted(ptrs + [0x80754A18])
+    so = 0x80754A34 - base
+    set1 = data[so + 48:so + 48 + 57].decode("latin1")
+    set6 = data[so + 48 + 60:so + 48 + 60 + 48].decode("latin1")
+    interp, styles = {}, []
+    for st in range(8):
+        first, count, height, ksp, kch, kan = struct.unpack_from(">6B", data, so + 6 * st)
+        fmt, siz, pw = FONT_FMT[st]
+        L = len(T.file(14, first)[0])
+        ph = L * 8 // (pw * (4 << siz))
+        for f in range(first, first + count):
+            interp[f] = (fmt, siz, pw, ph)
+        src = st if st < 7 else 3          # style 7 shares the digit table
+        p = ptrs[src]
+        n = (ends[ends.index(p) + 1] - p) // 4
+        cells = [struct.unpack_from(">hBB", data, p - base + 4 * i) for i in range(n)]
+        chars = {1: set1, 2: FONT_SET2, 3: FONT_NUM, 7: FONT_NUM, 6: set6}.get(st)
+        if chars is None:
+            chars = "".join(chr(0x21 + i) for i in range(n))
+        glyphs = []
+        page = 0
+        prev = -1
+        for i, ch in enumerate(chars[:n]):
+            x, w, _ = cells[i]
+            if st in (3, 7):
+                page = min(i, count - 1)
+            elif x < prev:
+                page += 1
+            prev = x
+            if page < count and 0 <= x and x < pw:
+                w = min(w, pw - x)
+                glyphs.append([ch, first + page, x, w])
+        styles.append({"style": st, "first": first, "count": count, "height": height, "page_w": pw, "page_h": ph,
+                       "fmt": fmt, "siz": siz, "glyphs": glyphs})
+    return interp, styles
+
+
 def textures(rom, T):
     uses, pals = texscan.scan(T)
+    font_interp, font_styles = fonts(rom, T)
     code = zlib.decompressobj(31).decompress(rom[CODE_GZ:CODE_GZ + 0x200000])
     spr, _ = texscan.scan_sprites(T, code)
     files = {(t, i): d for t in TEX_TABLES for i, d, g in T.files(t)}
@@ -67,6 +122,9 @@ def textures(rom, T):
                     interp = None
                 else:
                     rec["pals"] = ps
+        if t == 14 and i in font_interp:
+            interp = font_interp[i]
+            rec["src"] = "font"
         if interp is None and (t, i) in spr:
             interp = spr[(t, i)]
             rec["src"] = "sprite"
@@ -106,7 +164,7 @@ def textures(rom, T):
             rec.update(fact(texfmt.decode(d[:n0], w, h, fmt, siz)))
         out.append(rec)
     print("textures:", len(out), dict(stats))
-    return out
+    return out, font_styles
 
 
 def samples(rom):
@@ -139,10 +197,12 @@ def main(argv):
     rom = open(argv[1], "rb").read()
     os.makedirs(argv[2], exist_ok=True)
     T = Tables(rom)
-    tex = textures(rom, T)
+    tex, font_styles = textures(rom, T)
+    json.dump(font_styles, open(os.path.join(argv[2], "fonts.json"), "w"), separators=(",", ":"))
+    print("fonts:", [(f["style"], f["first"], f["count"], f["page_w"], f["page_h"], len(f["glyphs"])) for f in font_styles])
     with gzip.open(os.path.join(argv[2], "textures.json.gz"), "wt") as f:
         json.dump(tex, f, separators=(",", ":"))
-    if "--no-audio" not in argv:
+    if "--no-audio" not in argv and "--tex-only" not in argv:
         smp = samples(rom)
         with gzip.open(os.path.join(argv[2], "samples.json.gz"), "wt") as f:
             json.dump(smp, f, separators=(",", ":"))

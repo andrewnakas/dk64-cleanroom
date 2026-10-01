@@ -57,7 +57,9 @@ def main(argv):
     bad = sorted((h for h in hits if h[3] >= taint.FAIL_RUN), key=lambda h: -h[3])
     print(f"taint: {n} generated streams scanned; {len(hits)} with short coincidental matches; "
           f"{len(bad)} failing (run >= {taint.FAIL_RUN} B)")
-    for label, off, ln, run in bad[:12]:
+    import collections
+    print("  failing by kind:", dict(collections.Counter(h[0].split()[0] for h in bad)))
+    for label, off, ln, run in [h for h in bad if h[0].startswith("tex")][:6] + bad[:6]:
         print(f"  FAIL {label} run {run} B")
     return 1 if bad else 0
 
