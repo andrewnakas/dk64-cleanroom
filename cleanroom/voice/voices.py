@@ -143,6 +143,8 @@ def build(only=None):
     os.makedirs(CACHE, exist_ok=True)
     summary = []
     for p, v in L.items():
+        if not only and os.path.exists(os.path.join(CACHE, _name(p) + ".wav")):
+            continue                               # resume: keep takes already made
         n, hz = S[p]["nframes"], int(round(S[p]["rate"]))
         if v.get("kind") == "snore":
             x = snore(n, hz, hash(p) & 0xFFFF)

@@ -136,7 +136,8 @@ def _eye(cv, e):
     cv.clip = old
 
 
-def render(brief, w, h, grid=None, alpha=None, seed=0):
+def render(brief, w, h, grid=None, alpha=None, seed=0, window=None):
+    """window = (x0, y0, x1, y1): this texture shows that part of the brief's picture (one tile of several)."""
     base = brief.get("base", [128, 128, 128])
     if base == "grid" and grid is not None:
         from cleanroom.decomp.gen import upsample_grid as _upsample_grid, detail as _detail
@@ -154,6 +155,11 @@ def render(brief, w, h, grid=None, alpha=None, seed=0):
         if brief.get("detail"):                  # our own surface noise (scales, skin)
             from cleanroom.decomp.gen import detail as _detail
             cv.img = cv.img * _detail(seed, w * SS, h * SS, brief["detail"], 3.0 * SS)[..., None]
+    if window:
+        x0, y0, x1, y1 = window
+        cv.x = x0 + cv.x * (x1 - x0)
+        cv.y = y0 + cv.y * (y1 - y0)
+        cv.aspect = (w / (x1 - x0)) / (h / (y1 - y0))
     for op in brief.get("ops", []):
         c = op.get("c", [0, 0, 0])
         if "e" in op:
@@ -197,9 +203,10 @@ def render(brief, w, h, grid=None, alpha=None, seed=0):
             a = alpha > 0
             k = int(op["outline"])
             edge = np.zeros_like(a)
-            for dy in range(-k, k + 1):
-                for dx in range(-k, k + 1):
-                    edge |= ~np.roll(np.roll(a, dy, 0), dx, 1)
+            pa = np.pad(a, k, mode="edge")       # no outline along the texture border (tiles of one picture)
+            for dy in range(2 * k + 1):
+                for dx in range(2 * k + 1):
+                    edge |= ~pa[dy:dy + h, dx:dx + w]
             edge &= a
             out[edge, :3] = op.get("c", [0, 0, 0])
     return out

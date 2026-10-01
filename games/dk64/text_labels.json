@@ -1233,5 +1233,125 @@
 255
 ],
 "edge_w": 3
+},
+"25/850": {
+"lines": [
+"FACTORY-MAP",
+"R&D",
+"TESTING",
+"LOBBY",
+"PRODUCTION"
+],
+"ink": [
+120,
+255,
+120,
+255
+],
+"over": true,
+"flip": "v"
+},
+"25/892": {
+"lines": [
+"FACTORY-MAP",
+"R&D",
+"TESTING",
+"LOBBY",
+"PRODUCTION"
+],
+"ink": [
+120,
+255,
+120,
+255
+],
+"over": true,
+"flip": "v"
+},
+"25/911": {
+"lines": [
+"FACTORY-MAP",
+"R&D",
+"TESTING",
+"LOBBY",
+"PRODUCTION"
+],
+"ink": [
+120,
+255,
+120,
+255
+],
+"over": true,
+"flip": "v"
+},
+"25/942": {
+"lines": [
+"FACTORY-MAP",
+"R&D",
+"TESTING",
+"LOBBY",
+"PRODUCTION"
+],
+"ink": [
+120,
+255,
+120,
+255
+],
+"over": true,
+"flip": "v"
+},
+"25/2652": {
+"lines": [
+"DK"
+],
+"ink": [
+235,
+30,
+20,
+255
+],
+"over": true
+},
+"7/902": {
+"lines": [
+"DK"
+],
+"ink": [
+235,
+30,
+20,
+255
+],
+"over": true
+},
+"25/3121": {
+"lines": [
+"KREW",
+"Items"
+],
+"ink": [
+230,
+230,
+230,
+255
+],
+"over": true,
+"flip": "v"
+},
+"25/3125": {
+"lines": [
+"KREW",
+"Next"
+],
+"ink": [
+230,
+230,
+230,
+255
+],
+"over": true,
+"flip": "v"
 }
 }

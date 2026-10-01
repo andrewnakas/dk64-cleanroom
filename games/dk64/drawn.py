@@ -139,8 +139,9 @@ def font_page(rec):
 LABELS = None
 
 
-def label(rec):
-    """Text-bearing textures re-typeset from text_labels.json: {"table/index": {lines, ink, bg, flip}}."""
+def label(rec, pal=None):
+    """Text-bearing textures re-typeset from text_labels.json: {"table/index": {lines, ink, bg, flip}}.
+    CI textures (pal given) take their grid from that palette's variant; the caller quantises."""
     global LABELS
     if LABELS is None:
         p = os.path.join(HERE, "text_labels.json")
@@ -155,9 +156,10 @@ def label(rec):
     if lb.get("over"):
         # words drawn over the regenerated (grid) image instead of a flat background
         from cleanroom.decomp import gen
-        d = {"w": w, "h": h, "grid": rec["grid"]}
-        if "alpha2" in rec:
-            d["alpha2"] = rec["alpha2"]
+        src = rec if pal is None else rec["variants"][str(pal)]
+        d = {"w": w, "h": h, "grid": src["grid"]}
+        if "alpha2" in src:
+            d["alpha2"] = src["alpha2"]
         base = gen.from_digest("t%d/%d" % (rec["t"], rec["i"]), d).astype(np.float32)
         m = glyphs.label_texture(dict(lb2, bg=[0, 0, 0, 0], ink=[255, 255, 255, 255]), dw, dh)[..., 3] / 255.0
         if rot:
@@ -308,7 +310,38 @@ def _rinds():
     return RINDS
 
 
+PICS = None
+
+
+def _pics():
+    """picture_briefs.json: pictures stored as several tiles; one brief per picture (facepaint ops in
+    picture coordinates over the kept grid), each tile renders its window of it."""
+    global PICS
+    if PICS is None:
+        PICS = {}
+        p = os.path.join(HERE, "picture_briefs.json")
+        if os.path.exists(p):
+            for pic in json.load(open(p))["pictures"].values():
+                for win, ids in pic["tiles"]:
+                    for t, i in ids:
+                        PICS[(t, i)] = (pic, win)
+    return PICS
+
+
+def picture(rec, pic, win):
+    from cleanroom.decomp import gen
+    from cleanroom.gfx import facepaint
+    w, h = rec["w"], rec["h"]
+    alpha = gen.unpack_alpha2(rec["alpha2"], w, h) if "alpha2" in rec else None
+    brief = {"base": "grid", "detail": pic.get("detail", 0.04), "ops": pic["ops"]}
+    img = facepaint.render(brief, w, h, grid=rec["grid"], alpha=alpha, seed=gen.h32("pic", rec["t"], rec["i"]), window=win)
+    return np.clip(img, 0, 255).astype(np.uint8)
+
+
 def hook(rec, pal=None):
+    pc = _pics().get((rec["t"], rec["i"]))
+    if pc is not None and rec["fmt"] != 2:
+        return picture(rec, *pc)
     r = _rinds().get((rec["t"], rec["i"]))
     if r is not None and rec["fmt"] != 2:
         img = rind(rec, r)
@@ -319,6 +352,4 @@ def hook(rec, pal=None):
         return auto_eye(rec, f)
     if rec["t"] == 14 and rec.get("src") == "font":
         return font_page(rec)
-    if rec["fmt"] != 2:
-        return label(rec)
-    return None
+    return label(rec, pal if rec["fmt"] == 2 else None)
