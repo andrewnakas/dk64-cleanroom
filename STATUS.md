@@ -61,6 +61,11 @@
 - Still grid blobs: 36-tile kong mosaic on blue (25/3441-3476), K. Rool plate (7/903), coloured banana tiles
   (7/504-509, 890-901), split "Production" floor text (25/3166-3170), DK logo halves (7/585, 591; 25/3384-3385).
 
+- 2026-10-02 ~01:40 republished (user approved pushes): K. Rool plate portrait (7/903). Native scripted run
+  re-checked on the new voices/portraits build: file select, DK walking outside the treehouse, pause menu.
+  File-select icons (banana, orange) are still grid blobs. The machine was short on RAM (one build died in
+  numpy allocation; rerun with OPENBLAS_NUM_THREADS=1 worked) and the emulator ran ~4x slower than before.
+
 ## Known gaps / next (older list; portraits, voices and CI labels above supersede it)
 - Title logo "DONKEY KONG 64" and other text inside world textures are still grid blobs: re-typeset list in
   `text_labels.json` (only the Nintendo label so far).
