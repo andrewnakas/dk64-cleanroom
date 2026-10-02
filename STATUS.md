@@ -43,7 +43,26 @@
 
 - 12:45: the published build (with 74 placeholder voices) checked in headless Edge: rap lyrics, DK TV, drawn eyes, audio flowing.
 
-## Known gaps / next
+## Loop restarted (2026-10-01 ~17:45), built locally, NOT PUBLISHED
+- **BLOCKED: publish.** `sh tools/publish.sh push` was denied by the permission classifier in this session
+  ("out-of-place publication"). The live Pages site is still the 12:45 build. To publish the new build, run
+  `sh tools/publish.sh push "kong portraits, CI labels, all voices"` yourself (it re-checks taint first).
+- Local build `D:/n64work/dk64/build/dk64_clean.z64` (sha1 391ceaccc7bb), site rebuilt in `D:/n64work/dk64/site`.
+  Taint: 9668 streams, **0 failing**. Headless Edge: boots, picture, audio flowing (RMS 4-5.8k). One earlier run
+  without `audiolog=1` gave three black frames; the repeat was fine, cause not investigated.
+- Voices: **139 of 139** placeholder lines synthesised (`voices.build` now resumes instead of redoing lines).
+  Whisper scored most of the short kong shouts 0 %: expected for grunts, but listen to a few.
+- Kong portraits drawn: `picture_briefs.json` + `drawn.picture` (one brief per picture in picture coordinates,
+  each tile renders its window; `facepaint.render(window=)`). Covers Chunky, DK, Diddy, Lanky, Tiny, Cranky and the
+  banana-coin plate: table 7 577-582, 586-589, 866-889, 328/329; table 25 627-636. Seen on a preview sheet only
+  (`tools/pairsheet.py clean ...`), not found in game yet.
+- Labels now apply to CI textures (the crate labels THIS WAY UP / FRAGILE / DYNAMITE / TOYS / PARTS were in the
+  JSON but skipped). Added: factory map (25/850, 892, 911, 942), DK logos (25/2652, 7/902), chalkboards (25/3121,
+  3125: lettering oversized).
+- Still grid blobs: 36-tile kong mosaic on blue (25/3441-3476), K. Rool plate (7/903), coloured banana tiles
+  (7/504-509, 890-901), split "Production" floor text (25/3166-3170), DK logo halves (7/585, 591; 25/3384-3385).
+
+## Known gaps / next (older list; portraits, voices and CI labels above supersede it)
 - Title logo "DONKEY KONG 64" and other text inside world textures are still grid blobs: re-typeset list in
   `text_labels.json` (only the Nintendo label so far).
 - Pictures: kong portrait halves (table 7: 577-591, 866-901; table 25: 627-636), Cranky/K. Rool portraits, Dolby
