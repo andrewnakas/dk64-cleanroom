@@ -43,11 +43,10 @@
 
 - 12:45: the published build (with 74 placeholder voices) checked in headless Edge: rap lyrics, DK TV, drawn eyes, audio flowing.
 
-## Loop restarted (2026-10-01 ~17:45), built locally, NOT PUBLISHED
-- **BLOCKED: publish.** `sh tools/publish.sh push` was denied by the permission classifier in this session
-  ("out-of-place publication"). The live Pages site is still the 12:45 build. To publish the new build, run
-  `sh tools/publish.sh push "kong portraits, CI labels, all voices"` yourself (it re-checks taint first).
-- Local build `D:/n64work/dk64/build/dk64_clean.z64` (sha1 391ceaccc7bb), site rebuilt in `D:/n64work/dk64/site`.
+## Loop restarted (2026-10-01 ~17:45), published ~19:00
+- Published to gh-pages at the user's request (the autonomous push had been denied by the permission classifier;
+  expect that again in unattended runs).
+- Build `D:/n64work/dk64/build/dk64_clean.z64` (sha1 391ceaccc7bb), site rebuilt in `D:/n64work/dk64/site`.
   Taint: 9668 streams, **0 failing**. Headless Edge: boots, picture, audio flowing (RMS 4-5.8k). One earlier run
   without `audiolog=1` gave three black frames; the repeat was fine, cause not investigated.
 - Voices: **139 of 139** placeholder lines synthesised (`voices.build` now resumes instead of redoing lines).
